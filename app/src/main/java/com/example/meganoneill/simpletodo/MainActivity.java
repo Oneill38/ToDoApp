@@ -10,6 +10,10 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
 
+import org.apache.commons.io.FileUtils;
+
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
@@ -21,9 +25,10 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        readItems();
         lvItems = (ListView)findViewById(R.id.lvItems);
-        items = new ArrayList<>();
         itemsAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, items);
+        items = new ArrayList<>();
         lvItems.setAdapter(itemsAdapter);
         items.add("First Item");
         items.add("Second Item");
@@ -37,6 +42,7 @@ public class MainActivity extends AppCompatActivity {
                     public boolean onItemLongClick(AdapterView<?> adapter, View item, int pos, long id){
                         items.remove(pos);
                         itemsAdapter.notifyDataSetChanged();
+                        writeItems();
                         return true;
                     }
                 }
@@ -65,5 +71,26 @@ public class MainActivity extends AppCompatActivity {
         String itemText = etNewItem.getText().toString();
         itemsAdapter.add(itemText);
         etNewItem.setText("");
+        writeItems();
+    }
+
+    private void readItems(){
+        File filesDir = getFilesDir();
+        File todoFile = new File(filesDir, "todo.txt");
+        try{
+            items = new ArrayList<String>(FileUtils.readLines(todoFile));
+        } catch(IOException e){
+            items = new ArrayList<String>();
+        }
+    }
+
+    private void writeItems(){
+        File filesDir = getFilesDir();
+        File todoFile = new File(filesDir, "todo.txt");
+        try{
+            FileUtils.writeLines(todoFile, items);
+        } catch(IOException e){
+            e.printStackTrace();
+        }
     }
 }
