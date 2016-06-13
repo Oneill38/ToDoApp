@@ -12,15 +12,12 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import org.apache.commons.io.FileUtils;
-
-import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
-    ArrayList<String> items;
-    ArrayAdapter<String> itemsAdapter;
+    List<Item> items;
+    ArrayAdapter<Item> itemsAdapter;
     ListView lvItems;
 
     private final int REQUEST_CODE = 20;
@@ -30,13 +27,11 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        readItems();
         lvItems = (ListView)findViewById(R.id.lvItems);
-        itemsAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, items);
+        readItems();
         items = new ArrayList<>();
+        itemsAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, items);
         lvItems.setAdapter(itemsAdapter);
-        items.add("First Item");
-        items.add("Second Item");
         setupListViewListener();
         setUpEditListener();
     }
@@ -47,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
                 @Override
                 public void onItemClick(AdapterView<?> adapter, View item, int pos, long id){
                     Intent intent = new Intent(MainActivity.this, EditActivity.class);
-                    intent.putExtra("item", items.get(pos));
+                    intent.putExtra("item", items.get(pos).toString());
                     intent.putExtra("position", pos);
                     startActivityForResult(intent, REQUEST_CODE);
                 }
@@ -60,9 +55,12 @@ public class MainActivity extends AppCompatActivity {
                 new AdapterView.OnItemLongClickListener(){
                     @Override
                     public boolean onItemLongClick(AdapterView<?> adapter, View item, int pos, long id){
+                        String name = lvItems.getItemAtPosition(pos).toString();
+                        List<Item> toDo = Item.findWithQuery(Item.class, "Select * from Note where name = ?", name);
+                        toDo.get(0).delete();
+                        toDo.get(0).save();
                         items.remove(pos);
                         itemsAdapter.notifyDataSetChanged();
-                        writeItems();
                         return true;
                     }
                 }
@@ -89,9 +87,10 @@ public class MainActivity extends AppCompatActivity {
     public void onAddItem(View v){
         EditText etNewItem = (EditText) findViewById(R.id.etNewItem);
         String itemText = etNewItem.getText().toString();
-        itemsAdapter.add(itemText);
+        Item new_item = writeItems(itemText);
+        items.add(new_item);
+        itemsAdapter.notifyDataSetChanged();
         etNewItem.setText("");
-        writeItems();
     }
 
     @Override
@@ -100,30 +99,22 @@ public class MainActivity extends AppCompatActivity {
         if (resultCode == RESULT_OK && requestCode == REQUEST_CODE) {
             String text = data.getExtras().getString("item");
             int position = data.getExtras().getInt("position", 0);
-            items.set(position, text);
-            writeItems();
+            List<Item> toDo = Item.findWithQuery(Item.class, "Select * from Item where name = ?", text);
+            toDo.get(0).name = text;
+            toDo.get(0).save();
+            items.set(position, toDo.get(0));
             itemsAdapter.notifyDataSetChanged();
             Toast.makeText(this, text, Toast.LENGTH_SHORT).show();
         }
     }
 
     private void readItems(){
-        File filesDir = getFilesDir();
-        File todoFile = new File(filesDir, "todo.txt");
-        try{
-            items = new ArrayList<String>(FileUtils.readLines(todoFile));
-        } catch(IOException e){
-            items = new ArrayList<String>();
-        }
+        items = Item.listAll(Item.class);
     }
 
-    private void writeItems(){
-        File filesDir = getFilesDir();
-        File todoFile = new File(filesDir, "todo.txt");
-        try{
-            FileUtils.writeLines(todoFile, items);
-        } catch(IOException e){
-            e.printStackTrace();
-        }
+    private Item writeItems(String new_text){
+       Item new_item = new Item(new_text);
+        new_item.save();
+        return new_item;
     }
 }
