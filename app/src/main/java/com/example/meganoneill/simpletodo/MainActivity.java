@@ -7,17 +7,15 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
-    List<Item> items;
-    ArrayAdapter<Item> itemsAdapter;
+    ArrayList<Item> items;
+    ItemsListAdapter itemsAdapter;
     ListView lvItems;
 
     private final int REQUEST_CODE = 20;
@@ -27,10 +25,10 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        lvItems = (ListView)findViewById(R.id.lvItems);
         readItems();
         items = new ArrayList<>();
-        itemsAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, items);
+        lvItems = (ListView)findViewById(R.id.lvItems);
+        itemsAdapter = new ItemsListAdapter(this, items);
         lvItems.setAdapter(itemsAdapter);
         setupListViewListener();
         setUpEditListener();
@@ -108,7 +106,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void readItems(){
-        items = Item.listAll(Item.class);
+        items = (ArrayList) Item.listAll(Item.class);
     }
 
 }
