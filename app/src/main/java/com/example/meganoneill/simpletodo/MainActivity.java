@@ -55,11 +55,9 @@ public class MainActivity extends AppCompatActivity {
                 new AdapterView.OnItemLongClickListener(){
                     @Override
                     public boolean onItemLongClick(AdapterView<?> adapter, View item, int pos, long id){
-                        String name = lvItems.getItemAtPosition(pos).toString();
-                        List<Item> toDo = Item.findWithQuery(Item.class, "Select * from Note where name = ?", name);
-                        toDo.get(0).delete();
-                        toDo.get(0).save();
+                        Item name = (Item) lvItems.getItemAtPosition(pos);
                         items.remove(pos);
+                        name.delete();
                         itemsAdapter.notifyDataSetChanged();
                         return true;
                     }
@@ -87,7 +85,8 @@ public class MainActivity extends AppCompatActivity {
     public void onAddItem(View v){
         EditText etNewItem = (EditText) findViewById(R.id.etNewItem);
         String itemText = etNewItem.getText().toString();
-        Item new_item = writeItems(itemText);
+        Item new_item = new Item(itemText);
+        new_item.save();
         items.add(new_item);
         itemsAdapter.notifyDataSetChanged();
         etNewItem.setText("");
@@ -98,11 +97,11 @@ public class MainActivity extends AppCompatActivity {
         // REQUEST_CODE is defined above
         if (resultCode == RESULT_OK && requestCode == REQUEST_CODE) {
             String text = data.getExtras().getString("item");
-            int position = data.getExtras().getInt("position", 0);
-            List<Item> toDo = Item.findWithQuery(Item.class, "Select * from Item where name = ?", text);
-            toDo.get(0).name = text;
-            toDo.get(0).save();
-            items.set(position, toDo.get(0));
+            int position = data.getExtras().getInt("position");
+            Item toDo = items.get(position);
+            toDo.name = text;
+            toDo.save();
+            items.set(position, toDo);
             itemsAdapter.notifyDataSetChanged();
             Toast.makeText(this, text, Toast.LENGTH_SHORT).show();
         }
@@ -112,9 +111,4 @@ public class MainActivity extends AppCompatActivity {
         items = Item.listAll(Item.class);
     }
 
-    private Item writeItems(String new_text){
-       Item new_item = new Item(new_text);
-        new_item.save();
-        return new_item;
-    }
 }
