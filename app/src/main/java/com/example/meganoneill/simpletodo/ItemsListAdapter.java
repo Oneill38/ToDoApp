@@ -28,8 +28,10 @@ public class ItemsListAdapter extends ArrayAdapter<Item> {
         }
         // Lookup view for data population
         TextView tvName = (TextView) convertView.findViewById(R.id.tvName);
+        TextView tvPriority = (TextView) convertView.findViewById(R.id.tvPriority);
         // Populate the data into the template view using the data object
         tvName.setText(item.name);
+        tvPriority.setText(item.priority);
         // Return the completed view to render on screen
         return convertView;
     }

@@ -7,14 +7,16 @@ import com.orm.SugarRecord;
  */
 public class Item extends SugarRecord {
     public String name;
+    public String priority;
 
     public Item(){
         super();
     }
 
-    public Item(String name){
+    public Item(String name, String priority){
         super();
         this.name = name;
+        this.priority = priority;
     }
 
     public String getName(){

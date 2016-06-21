@@ -1,0 +1,1 @@
+alter table ITEM add PRIORITY TEXT;

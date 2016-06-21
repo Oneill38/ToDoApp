@@ -42,6 +42,7 @@ public class MainActivity extends AppCompatActivity {
                     Intent intent = new Intent(MainActivity.this, EditActivity.class);
                     intent.putExtra("item", items.get(pos).toString());
                     intent.putExtra("position", pos);
+                    intent.putExtra("priority", items.get(pos).priority);
                     startActivityForResult(intent, REQUEST_CODE);
                 }
             }
@@ -83,7 +84,7 @@ public class MainActivity extends AppCompatActivity {
     public void onAddItem(View v){
         EditText etNewItem = (EditText) findViewById(R.id.etNewItem);
         String itemText = etNewItem.getText().toString();
-        Item new_item = new Item(itemText);
+        Item new_item = new Item(itemText, "Low");
         new_item.save();
         items.add(new_item);
         itemsAdapter.notifyDataSetChanged();
@@ -95,9 +96,11 @@ public class MainActivity extends AppCompatActivity {
         // REQUEST_CODE is defined above
         if (resultCode == RESULT_OK && requestCode == REQUEST_CODE) {
             String text = data.getExtras().getString("item");
+            String priority = data.getExtras().getString("priority");
             int position = data.getExtras().getInt("position");
             Item toDo = items.get(position);
             toDo.name = text;
+            toDo.priority = priority;
             toDo.save();
             items.set(position, toDo);
             itemsAdapter.notifyDataSetChanged();
