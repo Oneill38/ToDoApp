@@ -7,7 +7,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -20,6 +19,7 @@ public class MainActivity extends AppCompatActivity {
 
     private final int REQUEST_CODE = 20;
     private final int RESULT_OK = 100;
+    private final int RESULT_ADDED = 150;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +32,11 @@ public class MainActivity extends AppCompatActivity {
         lvItems.setAdapter(itemsAdapter);
         setupListViewListener();
         setUpEditListener();
+    }
+
+    public void addItem(View v){
+        Intent intent = new Intent(MainActivity.this, BasicActivity.class);
+        startActivityForResult(intent, REQUEST_CODE);
     }
 
     private void setUpEditListener(){
@@ -81,15 +86,15 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void onAddItem(View v){
-        EditText etNewItem = (EditText) findViewById(R.id.etNewItem);
-        String itemText = etNewItem.getText().toString();
-        Item new_item = new Item(itemText, "Low");
-        new_item.save();
-        items.add(new_item);
-        itemsAdapter.notifyDataSetChanged();
-        etNewItem.setText("");
-    }
+//    public void onAddItem(View v){
+//        EditText etNewItem = (EditText) findViewById(R.id.etNewItem);
+//        String itemText = etNewItem.getText().toString();
+//        Item new_item = new Item(itemText, "Low");
+//        new_item.save();
+//        items.add(new_item);
+//        itemsAdapter.notifyDataSetChanged();
+//        etNewItem.setText("");
+//    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -103,6 +108,14 @@ public class MainActivity extends AppCompatActivity {
             toDo.priority = priority;
             toDo.save();
             items.set(position, toDo);
+            itemsAdapter.notifyDataSetChanged();
+            Toast.makeText(this, text, Toast.LENGTH_SHORT).show();
+        }
+        if (resultCode == RESULT_ADDED && requestCode == REQUEST_CODE){
+            String text = data.getExtras().getString("item");
+            String priority = data.getExtras().getString("priority");
+            Item newItem = Item.find(Item.class, "name = ?", text).get(0);
+            items.add(newItem);
             itemsAdapter.notifyDataSetChanged();
             Toast.makeText(this, text, Toast.LENGTH_SHORT).show();
         }
