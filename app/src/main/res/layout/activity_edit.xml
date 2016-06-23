@@ -9,25 +9,37 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.example.meganoneill.simpletodo.EditActivity">
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Edit Item"
+        android:id="@+id/textView5"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:textAlignment="center"
+        android:textSize="30dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignRight="@+id/pri_spinner"
+        android:layout_alignEnd="@+id/pri_spinner" />
+
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:inputType="textMultiLine"
         android:ems="10"
         android:id="@+id/edtTxt"
-        android:layout_marginTop="31dp"
-        android:layout_below="@+id/svEditBtn"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_below="@+id/textView5"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+
     <Spinner
         android:id="@+id/pri_spinner"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/edtTxt"
-        android:layout_toRightOf="@+id/edtTxt"
-        android:layout_toEndOf="@+id/edtTxt"
         android:background="@android:drawable/btn_dropdown"
-        />
+        android:layout_below="@+id/edtTxt"
+        android:layout_alignLeft="@+id/edtTxt"
+        android:layout_alignStart="@+id/edtTxt" />
 
     <Button
         android:layout_width="wrap_content"
@@ -35,8 +47,7 @@
         android:text="Save"
         android:id="@+id/svEditBtn"
         android:onClick="onSubmit"
-        android:layout_marginTop="81dp"
-        android:layout_below="@+id/editText"
+        android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true" />
 
     <Button
@@ -46,16 +57,49 @@
         android:onClick="setDate"
         android:text="@string/date_button_set"
         android:layout_below="@+id/textView3"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignRight="@+id/pri_spinner"
+        android:layout_alignEnd="@+id/pri_spinner" />
 
     <TextView
         android:id="@+id/textView3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignRight="@+id/button1"
-        android:layout_marginTop="72dp"
         android:text="@string/date_selected"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:layout_centerVertical="true" />
+        android:layout_alignRight="@+id/button1"
+        android:layout_alignEnd="@+id/button1"
+        android:layout_below="@+id/pri_spinner"
+        android:layout_alignLeft="@+id/button1"
+        android:layout_alignStart="@+id/button1" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Item Name:"
+        android:id="@+id/textView6"
+        android:layout_below="@+id/textView5"
+        android:layout_toLeftOf="@+id/edtTxt"
+        android:layout_above="@+id/pri_spinner"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Item Priority"
+        android:id="@+id/textView7"
+        android:layout_below="@+id/textView6"
+        android:layout_toLeftOf="@+id/svEditBtn"
+        android:layout_alignBottom="@+id/pri_spinner"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Item Due Date:"
+        android:id="@+id/textView8"
+        android:layout_alignBottom="@+id/button1"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
 </RelativeLayout>
