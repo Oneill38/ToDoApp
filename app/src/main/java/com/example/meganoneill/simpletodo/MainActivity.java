@@ -102,10 +102,12 @@ public class MainActivity extends AppCompatActivity {
         if (resultCode == RESULT_OK && requestCode == REQUEST_CODE) {
             String text = data.getExtras().getString("item");
             String priority = data.getExtras().getString("priority");
+            String deadline = data.getExtras().getString("deadline");
             int position = data.getExtras().getInt("position");
             Item toDo = items.get(position);
             toDo.name = text;
             toDo.priority = priority;
+            toDo.deadline = deadline;
             toDo.save();
             items.set(position, toDo);
             itemsAdapter.notifyDataSetChanged();
