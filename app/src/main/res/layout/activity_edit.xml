@@ -45,6 +45,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Save"
+        android:background="#800080"
+        android:textColor="#ffffff"
         android:id="@+id/svEditBtn"
         android:onClick="onSubmit"
         android:layout_alignParentBottom="true"

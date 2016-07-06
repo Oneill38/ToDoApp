@@ -34,6 +34,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Save"
+        android:background="#800080"
+        android:textColor="#ffffff"
         android:id="@+id/svBtnNew"
         android:onClick="addNewItem"
         android:layout_alignParentBottom="true"
@@ -46,8 +48,8 @@
         android:onClick="setDate"
         android:text="@string/date_button_set"
         android:layout_below="@+id/textView3"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_alignRight="@+id/pri_spinner"
+        android:layout_alignEnd="@+id/pri_spinner" />
 
     <TextView
         android:id="@+id/textView3"
