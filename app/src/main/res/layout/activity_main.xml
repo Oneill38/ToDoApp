@@ -9,22 +9,39 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.example.meganoneill.simpletodo.MainActivity">
 
-    <Button
+    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Add Item"
         android:onClick="addItem"
         android:id="@+id/btnAddItem"
+        android:textSize="28sp"
+        android:textColor="#800080"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true" />
 
     <ListView
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:id="@+id/lvItems"
-        android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_above="@+id/btnAddItem" />
+        android:layout_alignParentStart="false"
+        android:layout_above="@+id/btnAddItem"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textView9" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="@string/all_todo"
+        android:id="@+id/textView9"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:paddingEnd="10px"
+        android:paddingStart="10px"
+        android:layout_marginBottom="30px"
+        android:phoneNumber="true" />
 
 </RelativeLayout>

@@ -1,6 +1,7 @@
 package com.example.meganoneill.simpletodo;
 
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
@@ -8,6 +9,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -32,6 +34,11 @@ public class MainActivity extends AppCompatActivity {
         lvItems.setAdapter(itemsAdapter);
         setupListViewListener();
         setUpEditListener();
+
+        Typeface fontFamily = Typeface.createFromAsset(getAssets(), "fontawesome-webfont.ttf");
+        TextView sampleText = (TextView) findViewById(R.id.btnAddItem);
+        sampleText.setTypeface(fontFamily);
+        sampleText.setText("\uf055");
     }
 
     public void addItem(View v){
