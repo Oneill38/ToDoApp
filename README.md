@@ -10,4 +10,4 @@
 * Added Priority for each item
 * Added Due Date w/Calendar
 
-![alt tag](https://cloud.githubusercontent.com/assets/6576820/16322167/4dfc1ff6-396f-11e6-82b5-7e4b7eb6dd7c.gif)
+![alt tag](https://cloud.githubusercontent.com/assets/6576820/16634929/fdea239e-439d-11e6-9ece-1319c832fccd.gif)
