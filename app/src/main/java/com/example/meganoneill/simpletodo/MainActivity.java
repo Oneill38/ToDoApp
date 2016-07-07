@@ -38,7 +38,6 @@ public class MainActivity extends AppCompatActivity {
         Typeface fontFamily = Typeface.createFromAsset(getAssets(), "fontawesome-webfont.ttf");
         TextView sampleText = (TextView) findViewById(R.id.btnAddItem);
         sampleText.setTypeface(fontFamily);
-        sampleText.setText("\uf055");
     }
 
     public void addItem(View v){
